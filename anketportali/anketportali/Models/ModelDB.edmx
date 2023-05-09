@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cevaplar">
+          <Key>
+            <PropertyRef Name="cevapId" />
+          </Key>
+          <Property Name="cevapId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cevapAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cevapSoruId" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Katilimci">
+          <Key>
+            <PropertyRef Name="katId" />
+          </Key>
+          <Property Name="katId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="katNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="katAdSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="katMail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="katYas" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kayit">
+          <Key>
+            <PropertyRef Name="kayitId" />
+          </Key>
+          <Property Name="kayitId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="kayitSoruId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="kayitKatilimciId" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sorular">
+          <Key>
+            <PropertyRef Name="soruId" />
+          </Key>
+          <Property Name="soruId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="soruSayi" Type="int" Nullable="false" />
+          <Property Name="soruKonusu" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="soruKodu" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="soruCevabi" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cevaplar_ToTable">
+          <End Role="Sorular" Type="Self.Sorular" Multiplicity="1" />
+          <End Role="Cevaplar" Type="Self.Cevaplar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sorular">
+              <PropertyRef Name="soruId" />
+            </Principal>
+            <Dependent Role="Cevaplar">
+              <PropertyRef Name="cevapSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kayit_ToKatilimci">
+          <End Role="Katilimci" Type="Self.Katilimci" Multiplicity="1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Katilimci">
+              <PropertyRef Name="katId" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="kayitKatilimciId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kayit_ToSorular">
+          <End Role="Sorular" Type="Self.Sorular" Multiplicity="1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sorular">
+              <PropertyRef Name="soruId" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="kayitSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB2ModelStoreContainer">
+          <EntitySet Name="Cevaplar" EntityType="Self.Cevaplar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Katilimci" EntityType="Self.Katilimci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kayit" EntityType="Self.Kayit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sorular" EntityType="Self.Sorular" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cevaplar_ToTable" Association="Self.FK_Cevaplar_ToTable">
+            <End Role="Sorular" EntitySet="Sorular" />
+            <End Role="Cevaplar" EntitySet="Cevaplar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kayit_ToKatilimci" Association="Self.FK_Kayit_ToKatilimci">
+            <End Role="Katilimci" EntitySet="Katilimci" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kayit_ToSorular" Association="Self.FK_Kayit_ToSorular">
+            <End Role="Sorular" EntitySet="Sorular" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cevaplar">
+          <Key>
+            <PropertyRef Name="cevapId" />
+          </Key>
+          <Property Name="cevapId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cevapAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cevapSoruId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Sorular" Relationship="Self.FK_Cevaplar_ToTable" FromRole="Cevaplar" ToRole="Sorular" />
+        </EntityType>
+        <EntityType Name="Katilimci">
+          <Key>
+            <PropertyRef Name="katId" />
+          </Key>
+          <Property Name="katId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="katNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="katAdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="katMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="katYas" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kayit" Relationship="Self.FK_Kayit_ToKatilimci" FromRole="Katilimci" ToRole="Kayit" />
+        </EntityType>
+        <EntityType Name="Kayit">
+          <Key>
+            <PropertyRef Name="kayitId" />
+          </Key>
+          <Property Name="kayitId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kayitSoruId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kayitKatilimciId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Katilimci" Relationship="Self.FK_Kayit_ToKatilimci" FromRole="Kayit" ToRole="Katilimci" />
+          <NavigationProperty Name="Sorular" Relationship="Self.FK_Kayit_ToSorular" FromRole="Kayit" ToRole="Sorular" />
+        </EntityType>
+        <EntityType Name="Sorular">
+          <Key>
+            <PropertyRef Name="soruId" />
+          </Key>
+          <Property Name="soruId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="soruSayi" Type="Int32" Nullable="false" />
+          <Property Name="soruKonusu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="soruKodu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="soruCevabi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cevaplar" Relationship="Self.FK_Cevaplar_ToTable" FromRole="Sorular" ToRole="Cevaplar" />
+          <NavigationProperty Name="Kayit" Relationship="Self.FK_Kayit_ToSorular" FromRole="Sorular" ToRole="Kayit" />
+        </EntityType>
+        <Association Name="FK_Cevaplar_ToTable">
+          <End Role="Sorular" Type="Self.Sorular" Multiplicity="1" />
+          <End Role="Cevaplar" Type="Self.Cevaplar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sorular">
+              <PropertyRef Name="soruId" />
+            </Principal>
+            <Dependent Role="Cevaplar">
+              <PropertyRef Name="cevapSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kayit_ToKatilimci">
+          <End Role="Katilimci" Type="Self.Katilimci" Multiplicity="1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Katilimci">
+              <PropertyRef Name="katId" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="kayitKatilimciId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kayit_ToSorular">
+          <End Role="Sorular" Type="Self.Sorular" Multiplicity="1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sorular">
+              <PropertyRef Name="soruId" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="kayitSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cevaplar" EntityType="Self.Cevaplar" />
+          <EntitySet Name="Katilimci" EntityType="Self.Katilimci" />
+          <EntitySet Name="Kayit" EntityType="Self.Kayit" />
+          <EntitySet Name="Sorular" EntityType="Self.Sorular" />
+          <AssociationSet Name="FK_Cevaplar_ToTable" Association="Self.FK_Cevaplar_ToTable">
+            <End Role="Sorular" EntitySet="Sorular" />
+            <End Role="Cevaplar" EntitySet="Cevaplar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kayit_ToKatilimci" Association="Self.FK_Kayit_ToKatilimci">
+            <End Role="Katilimci" EntitySet="Katilimci" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kayit_ToSorular" Association="Self.FK_Kayit_ToSorular">
+            <End Role="Sorular" EntitySet="Sorular" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB2ModelStoreContainer" CdmEntityContainer="DB2Entities">
+          <EntitySetMapping Name="Cevaplar">
+            <EntityTypeMapping TypeName="DB2Model.Cevaplar">
+              <MappingFragment StoreEntitySet="Cevaplar">
+                <ScalarProperty Name="cevapId" ColumnName="cevapId" />
+                <ScalarProperty Name="cevapAd" ColumnName="cevapAd" />
+                <ScalarProperty Name="cevapSoruId" ColumnName="cevapSoruId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Katilimci">
+            <EntityTypeMapping TypeName="DB2Model.Katilimci">
+              <MappingFragment StoreEntitySet="Katilimci">
+                <ScalarProperty Name="katId" ColumnName="katId" />
+                <ScalarProperty Name="katNo" ColumnName="katNo" />
+                <ScalarProperty Name="katAdSoyad" ColumnName="katAdSoyad" />
+                <ScalarProperty Name="katMail" ColumnName="katMail" />
+                <ScalarProperty Name="katYas" ColumnName="katYas" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kayit">
+            <EntityTypeMapping TypeName="DB2Model.Kayit">
+              <MappingFragment StoreEntitySet="Kayit">
+                <ScalarProperty Name="kayitId" ColumnName="kayitId" />
+                <ScalarProperty Name="kayitSoruId" ColumnName="kayitSoruId" />
+                <ScalarProperty Name="kayitKatilimciId" ColumnName="kayitKatilimciId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sorular">
+            <EntityTypeMapping TypeName="DB2Model.Sorular">
+              <MappingFragment StoreEntitySet="Sorular">
+                <ScalarProperty Name="soruId" ColumnName="soruId" />
+                <ScalarProperty Name="soruSayi" ColumnName="soruSayi" />
+                <ScalarProperty Name="soruKonusu" ColumnName="soruKonusu" />
+                <ScalarProperty Name="soruKodu" ColumnName="soruKodu" />
+                <ScalarProperty Name="soruCevabi" ColumnName="soruCevabi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
